@@ -6,21 +6,25 @@ from .forms import Ceaser
 
 def index(request):
 	form = Ceaser(request.POST or None)
+	text = ''
+	key = 0
 	context = {
 		'form':form
 	}
-	
-	result = ceaser_cipher(input)
-	return render(request, 'index.html' , context)
+	if form.is_valid():
+		key = form.cleaned_data.get('key')
+		text = form.cleaned_data.get('user_text')
+		result = ceaser_cipher(text, key)
+		context = {'form':form,'result':result}
+	return render(request, 'index.html', context)
 
-def ceaser_cipher(plaintext):
+def ceaser_cipher(plaintext,key):
 	alphabet = "abcdefghijklmnopqrstuvwxyz"
-	num = 2
 
 	cipher = ''
 	for c in plaintext:
 		if c.isalpha():
-			cipher += alphabet[(alphabet.index(c)+ num)]
+			cipher += alphabet[alphabet.index(c) +key]
 		else:
 			cipher+= c
 	return cipher

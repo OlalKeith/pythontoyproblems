@@ -1,8 +1,9 @@
 <html>
 <h4>ceaser cipher!</h4>
-<form method="POST">
+<form method="POST" accept-charset="utf-8">
+{%csrf_token%}
 {{form.as_p}}
-<input type="submit" value="cipher">	
+<input type="submit" value="cipher">
 </form>
 <h3>{{result}}</h3>
 
